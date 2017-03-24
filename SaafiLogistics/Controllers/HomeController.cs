@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace SaafiLogistics.Controllers
 {
@@ -10,25 +12,12 @@ namespace SaafiLogistics.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
+            Dictionary<string, string> actionChoices = new Dictionary<string, string>();
+            actionChoices.Add("owner", "Owner");
+            actionChoices.Add("driver", "Driver");
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+            ViewBag.actions = actionChoices;
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
             return View();
         }
     }
