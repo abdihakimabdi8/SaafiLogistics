@@ -1,0 +1,27 @@
+﻿@model SaafiLogistics.ViewModels.AddUserViewModel
+
+<form asp-controller="User" asp-action="Add" method="post">
+    <div class="form-group ">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+
+    </div>
+    <div class="form-group ">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group ">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+
+    </div>
+    <div class="form-group ">
+        <label asp-for="Verify"></label>
+        <input class="form-control" asp-for="Verify" type="password" />
+
+    </div>
+
+    <input name="submit" type="submit" class="form-control" />
+
+</form>
+

@@ -1,38 +1,37 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 namespace SaafiLogistics.Models
 {
     public class LoadData
   
     {
-        static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
+        static private List<Load> AllLoads = new List<Load>();
+        
 
-        public static List<Dictionary<string, string>> FindAll()
+        public static List<Load> FindAll()
         {
-            LoadData();
+           // LoadData();
 
             // Bonus mission: return a copy
-            return new List<Dictionary<string, string>>(AllJobs);
+            return AllLoads;
         }
 
         /*
          * Returns a list of all values contained in a given column,
          * without duplicates. 
          */
-        public static List<string> FindAll(string column)
+      /**  public static List<Load> FindAll(string column)
         {
-            LoadData();
+          //  LoadData();
 
             List<string> values = new List<string>();
 
-            foreach (Dictionary<string, string> job in AllJobs)
+            foreach (Dictionary<string, string> load in AllLoads)
             {
-                string aValue = job[column];
+                string aValue = load[column];
 
                 if (!values.Contains(aValue))
                 {
@@ -48,99 +47,137 @@ namespace SaafiLogistics.Models
         /**
          * Search all columns for the given term
          */
-        public static List<Dictionary<string, string>> FindByValue(string column, string value)
+        public static List<Load> FindByValue(string value)
         {
             // load data, if not already loaded
-            LoadData();
-            List<Dictionary<string, string>> values = new List<Dictionary<string, string>>();
-            foreach (Dictionary<string, string> jobs in AllJobs)
-            {
-                foreach (KeyValuePair<string, string> choice in jobs)
-                {
-                    string aValue = choice.Value.ToUpper();
+            // LoadData();
+            
+            List<Load> loads = new List<Load>();
 
-                    if (aValue.ToUpper().Contains(value.ToUpper()))
+            foreach (Load row in AllLoads)
+            {
+
+                foreach (string key in row.Keys)
+                {
+                    string aValue = row[key];
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
                     {
-                        values.Add(jobs);
+                        loads.Add(row);
+
+                        // Finding one field in a job that matches is sufficient
+                        break;
                     }
                 }
             }
-            return values;
+
+            return loads;
         }
+
+        internal static List<string> FindAll(string column)
+        {
+            throw new NotImplementedException();
+        }
+
         /**
-         * Returns results of search the jobs data by key/value, using
-         * inclusion of the search term.
-         *
-         * For example, searching for employer "Enterprise" will include results
-         * with "Enterprise Holdings, Inc".
-         */
+* Returns results of search the jobs data by key/value, using
+* inclusion of the search term.
+*
+* For example, searching for employer "Enterprise" will include results
+* with "Enterprise Holdings, Inc".
+*/
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
-            LoadData();
+          //  LoadData();
 
-            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            List<Dictionary<string, string>> loads = new List<Dictionary<string, string>>();
 
-            foreach (Dictionary<string, string> row in AllJobs)
+            foreach (Load row in AllLoads)
             {
                 string aValue = row[column];
 
                 if (aValue.ToLower().Contains(value.ToLower()))
                 {
-                    jobs.Add(row);
+                    loads.Add(row);
                 }
             }
 
-            return jobs;
+            return loads;
+        }
+        public static void Add(Load newLoad)
+        {
+            AllLoads.Add(newLoad);
+        }
+        public static Load GetById(int id)
+        {
+            return AllLoads.Single(x => x.LoadId == id);
         }
 
-        /*
-         * Load and parse data from job_data.csv
-         */
-        private static void LoadData()
+        public static void Remove(int id)
         {
-
-            if (IsDataLoaded)
-            {
-                return;
-            }
-
-            List<string[]> rows = new List<string[]>();
-
-            using (StreamReader reader = File.OpenText("Models/job_data.csv"))
-            {
-                while (reader.Peek() >= 0)
-                {
-                    string line = reader.ReadLine();
-                    string[] rowArrray = CSVRowToStringArray(line);
-                    if (rowArrray.Length > 0)
-                    {
-                        rows.Add(rowArrray);
-                    }
+            Load loadToRemove = GetById(id);
+            AllLoads.Remove(loadToRemove);
                 }
-            }
+        public static void Save(Load load)
+        {
+            var loadIndex = AllLoads.IndexOf(load);
+            Remove(load.LoadId);
 
-            string[] headers = rows[0];
-            rows.Remove(headers);
+            // Insert at the index of the removed cheese to ensure we keep order;
+            AllLoads.Insert(loadIndex, load);
+        }
 
-            // Parse each row array into a more friendly Dictionary
-            foreach (string[] row in rows)
-            {
-                Dictionary<string, string> rowDict = new Dictionary<string, string>();
 
-                for (int i = 0; i < headers.Length; i++)
+        /**
+                /*
+                 * Load and parse data from job_data.csv
+                 *
+                private static void LoadData()
+                {
+
+                    if (IsDataLoaded)
+                    {
+                        return;
+                    }
+
+                    List<string[]> rows = new List<string[]>();
+
+                    using (StreamReader reader = File.OpenText("Models/load_data.csv"))
+                    {
+                        while (reader.Peek() >= 0)
+                        {
+                            string line = reader.ReadLine();
+                            string[] rowArrray = CSVRowToStringArray(line);
+                            if (rowArrray.Length > 0)
+                            {
+                                rows.Add(rowArrray);
+                            }
+                        }
+                    }
+
+                    string[] headers = rows[0];
+                    rows.Remove(headers);
+
+                    // Parse each row array into a more friendly Dictionary
+                    foreach (string[] row in rows)
+                    {
+                        Dictionary<string, string> rowDict = new Dictionary<string, string>();
+
+                        for (int i = 0; i */
+        /*< headers.Length; i++)
                 {
                     rowDict.Add(headers[i], row[i]);
                 }
-                AllJobs.Add(rowDict);
+                AllLoads.Add(rowDict);
             }
 
             IsDataLoaded = true;
         }
 
-        /*
-         * Parse a single line of a CSV file into a string array
-         */
+        
+          Parse a single line of a CSV file into a string array
+         *
         private static string[] CSVRowToStringArray(string row, char fieldSeparator = ',', char stringSeparator = '\"')
         {
             bool isBetweenQuotes = false;
@@ -173,6 +210,6 @@ namespace SaafiLogistics.Models
             valueBuilder.Clear();
 
             return rowValues.ToArray();
-        }
+        }*/
     }
 }

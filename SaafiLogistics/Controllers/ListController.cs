@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SaafiLogistics.Models;
+using SaafiLogistics.ViewModels;
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 
 
-namespace Owner.Controllers
+namespace SaafiLogists.Controllers
 {
     public class ListController : Controller
     {
         internal static Dictionary<string, string> columnChoices = new Dictionary<string, string>();
-
+        List<Load> loads = LoadData.FindAll();
         // This is a "static constructor" which can be used
         // to initialize static members of a class
         static ListController()
         {
-
-            columnChoices.Add("core competency", "Skill");
-            columnChoices.Add("employer", "Employer");
-            columnChoices.Add("location", "Location");
-            columnChoices.Add("position type", "Position Type");
+            columnChoices.Add("date", "Date");
+            columnChoices.Add("load number", "Load Number");
+            columnChoices.Add("description", "Description");
+            columnChoices.Add("owner", "Owner");
+            columnChoices.Add("line haul", "Line Haul");
+            columnChoices.Add("advance ", "Advance");
+            columnChoices.Add("net", "Net");
             columnChoices.Add("all", "All");
         }
 
@@ -36,14 +41,14 @@ namespace Owner.Controllers
         {
             if (column.Equals("all"))
             {
-                List<Dictionary<string, string>> jobs = JobData.FindAll();
-                ViewBag.title = "All Jobs";
-                ViewBag.jobs = jobs;
-                return View("Jobs");
+                List<Load> loads = LoadData.FindAll();
+                ViewBag.title = "All Loads";
+                ViewBag.loads = loads;
+                return View("Loads");
             }
             else
             {
-                List<string> items = JobData.FindAll(column);
+                List<string> items = LoadData.FindAll(column);
                 ViewBag.title = "All " + columnChoices[column] + " Values";
                 ViewBag.column = column;
                 ViewBag.items = items;
@@ -51,11 +56,11 @@ namespace Owner.Controllers
             }
         }
 
-        public IActionResult Jobs(string column, string value)
+        public IActionResult Loads(string column, string value)
         {
-            List<Dictionary<String, String>> jobs = JobData.FindByColumnAndValue(column, value);
-            ViewBag.title = "Jobs with " + columnChoices[column] + ": " + value;
-            ViewBag.jobs = jobs;
+            List<Dictionary<string, string>> loads = LoadData.FindByColumnAndValue( column,  value);
+            ViewBag.title = "Loads with " + columnChoices[column] + ": " + value;
+            ViewBag.loads = loads;
 
             return View();
         }

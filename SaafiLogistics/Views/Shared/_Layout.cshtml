@@ -16,32 +16,32 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    @Html.Raw(JavaScriptSnippet.FullScript)
+   
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SaafiLogistics</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-controller="Search" asp-action="Index">Search</a></li>
+                    <li><a asp-controller="List" asp-action="Index">List</a></li>
+                    <li><a asp-controller="Add" asp-action="Index">New Load</a></li>
+                    <li><a asp-controller="Remove" asp-action="Index">Remove</a></li>
+                    <li><a asp-controller="Edit" asp-action="Index">Edit</a></li>
+                   
                 </ul>
             </div>
         </div>
-    </nav>
+    </div>
     <div class="container body-content">
         @RenderBody()
+    </div>
+
         <hr />
+    <div>
         <footer>
             <p>&copy; 2017 - SaafiLogistics</p>
         </footer>
