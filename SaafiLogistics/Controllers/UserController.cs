@@ -35,7 +35,7 @@ namespace SaafiLogistics.Controllers
 
             };
             UserData.Add(newUser);
-            return Redirect("/User");
+            return Redirect("/");
         }
     }
 }

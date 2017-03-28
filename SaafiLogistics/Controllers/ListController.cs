@@ -16,7 +16,8 @@ namespace SaafiLogists.Controllers
     public class ListController : Controller
     {
         internal static Dictionary<string, string> columnChoices = new Dictionary<string, string>();
-        List<Load> loads = LoadData.FindAll();
+        List<Driver> payroll = DriverData.FindAll();
+        List<Load> AllLoads = LoadData.FindAll();
         // This is a "static constructor" which can be used
         // to initialize static members of a class
         static ListController()
@@ -28,7 +29,7 @@ namespace SaafiLogists.Controllers
             columnChoices.Add("line haul", "Line Haul");
             columnChoices.Add("advance ", "Advance");
             columnChoices.Add("net", "Net");
-            columnChoices.Add("all", "All");
+
         }
 
         public IActionResult Index()
@@ -37,32 +38,47 @@ namespace SaafiLogists.Controllers
             return View();
         }
 
-        public IActionResult Values(string column)
+        public IActionResult Loads(string column)
         {
-            if (column.Equals("all"))
+            List<Load> allLoads = LoadData.FindAll();
+
+            return View(allLoads);
+        }
+        public IActionResult Payroll(string column)
+        { 
+            List<Driver> payroll = DriverData.FindAll();
+            return View(payroll);
+        }
+
+
+
+            /**if (column.Equals("all"))
             {
-                List<Load> loads = LoadData.FindAll();
-                ViewBag.title = "All Loads";
-                ViewBag.loads = loads;
+                List<Load> AllLoads = LoadData.FindAll();
                 return View("Loads");
             }
             else
             {
-                List<string> items = LoadData.FindAll(column);
-                ViewBag.title = "All " + columnChoices[column] + " Values";
-                ViewBag.column = column;
-                ViewBag.items = items;
-                return View();
+                return View("loads");
             }
-        }
+            /**     else
+                 {
+                     List<string> items = LoadData.FindAll(column);
+                     ViewBag.title = "All " + columnChoices[column] + " Values";
+                     ViewBag.column = column;
+                     ViewBag.items = items;
+                     return View();
+                 }
+             }
 
-        public IActionResult Loads(string column, string value)
-        {
-            List<Dictionary<string, string>> loads = LoadData.FindByColumnAndValue( column,  value);
-            ViewBag.title = "Loads with " + columnChoices[column] + ": " + value;
-            ViewBag.loads = loads;
+             public IActionResult Loads(string column, string value)
+             {
+                 List<Dictionary<string, string>> loads = LoadData.FindByColumnAndValue( column,  value);
+                 ViewBag.title = "Loads with " + columnChoices[column] + ": " + value;
+                 ViewBag.loads = loads;
 
-            return View();
+                 return View();
+             }**/
         }
     }
-}
+

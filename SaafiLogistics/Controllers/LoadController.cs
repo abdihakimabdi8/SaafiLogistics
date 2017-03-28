@@ -11,11 +11,10 @@ namespace SaafiLogistics.Controllers
     public class LoadController : Controller
     {
         // GET: /<controller>/
-        //List<Load> loads = LoadData.FindAll();
+        
         public IActionResult Index()
         {
-            List<Load> AllLoads = LoadData.FindAll();
-            return View(AllLoads);
+            return View();
         }
         public IActionResult Add()
         {
@@ -26,22 +25,25 @@ namespace SaafiLogistics.Controllers
         [HttpPost]
         public IActionResult Add(AddLoadViewModel addLoadViewModel)
         {
-            // Add the new load to my existing loads
-            Load newLoad = new Load
-
+            if (ModelState.IsValid)
             {
+                // Add the new cheese to my existing cheeses
+                Load newLoad = new Load
+                {
+                    Date = addLoadViewModel.Date,
+                    Number = addLoadViewModel.Number,
+                    Description = addLoadViewModel.Description,
+                    Owner = addLoadViewModel.Owner,
+                    Pay = addLoadViewModel.Pay,
+                    Advance = addLoadViewModel.Advance,
+                    Net = addLoadViewModel.Net
+                };
+                LoadData.Add(newLoad);
 
-                Date = AddLoadViewModel.Date,
-                Number = AddLoadViewModel.Number,
-                Description = AddLoadViewModel.Description,
-                Owner = AddLoadViewModel.Owner,
-                Pay = AddLoadViewModel.Pay,
-                Advance = AddLoadViewModel.Advance,
-                Net = AddLoadViewModel.Net
-            };
-            LoadData.Add(newLoad);
+                return Redirect("/List/Loads");
+            }
 
-            return Redirect("/Process");
+            return View(addLoadViewModel);
         }
         [HttpGet]
         [Route("/Load/Edit/{LoadId}")]
@@ -66,11 +68,11 @@ namespace SaafiLogistics.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remove(int loadIds)
+        public IActionResult Remove(int[] loadIds)
         {
             foreach (int LoadId in loadIds)
             {
-                LoadData.Remove(loadIds);
+                LoadData.Remove(LoadId);
             }
 
             return Redirect("/");

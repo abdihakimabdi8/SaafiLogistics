@@ -1,10 +1,12 @@
 ﻿<h1>@ViewBag.Title</h1>
-<h2>View All</h2>
-<ul>
+<h2><button class="btn btn-info btn-block" role="button"> List Loads By: </button></h2>
+
     @foreach (KeyValuePair<string, string> column in ViewBag.columns)
     {
-        <li>
-            <a asp-controller="List" asp-action="Values" asp-route-column="@column.Key">@column.Value</a>
-        </li>
+      
+            <a asp-controller="List" asp-action="Values" asp-route-column="@column.Key"  class="btn btn-info btn-lg" role="button">@column.Value</a>
+            
+
     }
-</ul>
+
+<a asp-controller="List" asp-action="Loads" asp-route-column="all" class="btn btn-info btn-lg" role="button">All</a>

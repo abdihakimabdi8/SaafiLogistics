@@ -1,8 +1,8 @@
-﻿@model SaafiLogistics.ViewModels.AddLoadViewModel
+﻿@model SaafiLogistics.ViewModels.DriverViewModel
 
 <h1>Add Load</h1>
 
-<form asp-controller="Load" asp-action="Add" method="post">
+<form asp-controller="Driver" asp-action="Add" method="post">
 
     <div class="form-group">
         <label asp-for="Date"></label>
@@ -20,24 +20,24 @@
         <span asp-validation-for="Description"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Owner"></label>
-        <input class="form-control" asp-for="Owner" />
-        <span asp-validation-for="Owner"></span>
+        <label asp-for="DriverName"></label>
+        <input class="form-control" asp-for="DriverName" />
+        <span asp-validation-for="DriverName"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Pay"></label>
-        <input class="form-control" asp-for="Pay" />
-        <span asp-validation-for="Pay"></span>
+        <label asp-for="LoadMiles"></label>
+        <input class="form-control" asp-for="LoadMiles" />
+        <span asp-validation-for="LoadMiles"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Advance"></label>
-        <input class="form-control" asp-for="Advance" />
-        <span asp-validation-for="Advance"></span>
+        <label asp-for="DeadMiles"></label>
+        <input class="form-control" asp-for="DeadMiles" />
+        <span asp-validation-for="DeadMiles"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Net"></label>
-        <input class="form-control" asp-for="Net" />
-        <span asp-validation-for="Net"></span>
+        <label asp-for="Rate"></label>
+        <input class="form-control" asp-for="Rate" />
+        <span asp-validation-for="Rate"></span>
     </div>
     <input class="btn btn-success" type="submit" value="Add Load" />
 

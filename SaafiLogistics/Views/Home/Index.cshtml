@@ -1,12 +1,32 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
-<p>Process Loads by:</p>
-<ul>
-    @foreach (KeyValuePair<string, string> type in ViewBag.type)
+
+<div>
+    <br />
+
+</div>
+<br />
+<div>
+    <br />
+
+</div>
+<br />
+<div class="span12 pagination-centered">
+
+
+    @*@foreach (KeyValuePair<string, string> type in ViewBag.type)
     {
-        <li><a asp-controller="Process" >@type.Value</a></li>
-        
-        
-    }
-</ul>
+
+        <a asp-controller="Process" class="btn btn-primary btn-lg" role="button">@type.Value</a>
+
+
+
+    }*@
+    <a asp-controller="Process" class="btn btn-primary btn-lg" role="button">Owner Operator</a>
+    <a asp-controller="Driver" class="btn btn-primary btn-lg" role="button">Company Driver</a>
+    <a asp-controller="Reports" asp-action="Generate" class="btn btn-primary btn-lg " role="button">Reports<span class="glyphicon glyphicon-list-alt"> </span></a><br />
+    <a asp-controller="Load" asp-action="Add" class="btn btn-primary btn-lg" role="button">Process Load</a>
+    <a asp-controller="Load" asp-action="Remove" class="btn btn-primary btn-lg" role="button">Remove Load<span class="glyphicon glyphicon-trash"> </span></a>
+    <a asp-controller="Load" asp-action="Edit" class="btn btn-primary btn-lg" role="button">Edit Load</a><br />
+</div>

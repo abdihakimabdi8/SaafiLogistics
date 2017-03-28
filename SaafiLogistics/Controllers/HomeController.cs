@@ -12,8 +12,8 @@ namespace SaafiLogistics.Controllers
         public IActionResult Index()
         {
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
-            actionChoices.Add("owner", "Owner");
-            actionChoices.Add("driver", "Driver");
+            actionChoices.Add("owner", "Owner Operator");
+            actionChoices.Add("driver", "Company Driver");
 
             ViewBag.type = actionChoices;
 

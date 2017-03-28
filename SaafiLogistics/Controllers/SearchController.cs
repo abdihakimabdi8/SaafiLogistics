@@ -15,10 +15,12 @@ namespace SaafiLogistics.Controllers
             ViewBag.title = "Search";
             return View();
         }
+    }
+}
         
-        [HttpPost]
+     /**    [HttpPost]
 
-        [Route("/Search")]
+       [Route("/Search")]
         public IActionResult Results(string searchType, string searchTerm)
         {
             ViewBag.columns = ListController.columnChoices;
@@ -40,4 +42,4 @@ namespace SaafiLogistics.Controllers
             }
         }
     }
-}
+}**/

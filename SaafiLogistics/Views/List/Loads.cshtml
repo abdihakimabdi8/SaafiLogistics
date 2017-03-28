@@ -1,7 +1,41 @@
 ﻿@model List<SaafiLogistics.Models.Load>
+<h1>@{ViewBag.title = "List of Loads";}</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No Loads yet!</p>
+
+}
+
+<table class="table table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Number</th>
+        <th>Description</th>
+        <th>Owner</th>
+        <th>Pay</th>
+        <th>Advance</th>
+        <th>Net</th>
+    </tr>
+    @foreach (var allLoads in Model)
+    {
+        <tr>
+            <td>@allLoads.Date</td>
+            <td>@allLoads.Number</td>
+            <td>@allLoads.Description</td>
+            <td>@allLoads.Owner</td>
+            <td>@allLoads.Pay</td>
+            <td>@allLoads.Advance</td>
+            <td>@allLoads.Net</td>
+        </tr>
+
+
+    }
+</table>
+@*@model List<SaafiLogistics.Models.Load>
 <h1>@ViewBag.title</h1>
-<h3>@ViewBag.loads.Count Result(s)</h3>
-<h1>@ViewBag.Title</h1>
+<h2>@ViewBag.loads.Count Result(s)</h2>
+
 
 @if (Model.Count == 0)
 {
@@ -20,34 +54,34 @@
              <th>Net</th>
 
          </tr>
-         @foreach (var loads in Model)
+         @foreach (var AllLoads in Model)
          {
 
 
 
                  <tr class="table table-striped">
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Date" asp-route-value="@loads.Date"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Date" asp-route-value="@AllLoads.Date"></a>
                      </td>
 
 
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Number" asp-route-value="@loads.Number"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Number" asp-route-value="@AllLoads.Number"></a>
                      </td>
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Description" asp-route-value="@loads.Description"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Description" asp-route-value="@AllLoads.Description"></a>
                      </td>
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Owner" asp-route-value="@loads.Owner"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Owner" asp-route-value="@AllLoads.Owner"></a>
                      </td>
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Pay" asp-route-value="@loads.Pay"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Pay" asp-route-value="@AllLoads.Pay"></a>
                      </td>
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Advance" asp-route-value="@loads.Advance"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Advance" asp-route-value="@AllLoads.Advance"></a>
                      </td>
                      <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@loads.Net" asp-route-value="@loads.Net"></a>
+                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Net" asp-route-value="@AllLoads.Net"></a>
                      </td>
 
 
@@ -70,3 +104,4 @@
 
 
 <p><a asp-controller="Load" asp-action="Add">Add Load</a></p>
+*@

@@ -1,11 +1,15 @@
 ﻿
     <h1> @ViewBag.title</h1>
 
-    <p>View Loads by:</p>
-    <ul>
-        @foreach (KeyValuePair<string, string> action in ViewBag.actions)
+    <button class="btn btn-info btn-lg" role="button">View Loads by: </button><br />
+
+  
+        @*@foreach (KeyValuePair<string, string> action in ViewBag.actions)
         {
-            
-            <li><a href="/@action.Key">@action.Value</a></li>
-        }
-    </ul>
+
+            <a asp-controller="@action.Key" class="btn btn-info btn-lg" role="button">@action.Value</a>
+         
+        }*@
+
+<a asp-controller="List" class="btn btn-info btn-lg" role="button">List</a>
+<a asp-controller="Search" class="btn btn-info btn-lg " role="button">Search<span class="glyphicon glyphicon-search"></span></a>
