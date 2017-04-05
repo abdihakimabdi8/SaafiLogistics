@@ -10,10 +10,10 @@ namespace SaafiLogistics.Models
 {
     public class Load
     {
-        public string Date { get; set; }
-        public string Number { get; set; }
-        public string Description { get; set; }
-        public string Owner { get; set; }
+        public Date Date { get; set; }
+        public Number Number { get; set; }
+        public Description Description { get; set; }
+        public Owner Owner { get; set; }
         public string Pay { get; set; }
         public string Advance { get; set; }
         public string Net { get; set; }

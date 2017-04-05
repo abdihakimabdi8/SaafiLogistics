@@ -1,84 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SaafiLogistics.Models;
+using SaafiLogistics.Data;
 using SaafiLogistics.ViewModels;
+using System.Linq;
+using System.Collections.Generic;
 
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-
-
-namespace SaafiLogists.Controllers
+namespace SaafiLogistics.Controllers
 {
     public class ListController : Controller
     {
-        internal static Dictionary<string, string> columnChoices = new Dictionary<string, string>();
-        List<Driver> payroll = DriverData.FindAll();
-        List<Load> AllLoads = LoadData.FindAll();
-        // This is a "static constructor" which can be used
-        // to initialize static members of a class
+
+        // Our reference to the data store
+        private static LoadData loadData;
+
         static ListController()
         {
-            columnChoices.Add("date", "Date");
-            columnChoices.Add("load number", "Load Number");
-            columnChoices.Add("description", "Description");
-            columnChoices.Add("owner", "Owner");
-            columnChoices.Add("line haul", "Line Haul");
-            columnChoices.Add("advance ", "Advance");
-            columnChoices.Add("net", "Net");
-
+            loadData = LoadData.GetInstance();
         }
 
+        // Lists options for browsing, by "column"
         public IActionResult Index()
         {
-            ViewBag.columns = columnChoices;
-            return View();
+            LoadFieldsViewModel loadFieldsViewModel = new LoadFieldsViewModel();
+            loadFieldsViewModel.Title = "View Load Fields";
+
+            return View(loadFieldsViewModel);
         }
 
-        public IActionResult Loads(string column)
+        // Lists the values of a given column, or all loads if selected
+        public IActionResult Values(LoadFieldType column)
         {
-            List<Load> allLoads = LoadData.FindAll();
-
-            return View(allLoads);
-        }
-        public IActionResult Payroll(string column)
-        { 
-            List<Driver> payroll = DriverData.FindAll();
-            return View(payroll);
-        }
-
-
-
-            /**if (column.Equals("all"))
+            if (column.Equals(LoadFieldType.All))
             {
-                List<Load> AllLoads = LoadData.FindAll();
-                return View("Loads");
+                SearchLoadsViewModel loadsViewModel = new SearchLoadsViewModel();
+                loadsViewModel.Loads = loadData.Loads;
+                loadsViewModel.Title = "All Loads";
+                return View("Loads", loadsViewModel);
             }
             else
             {
-                return View("loads");
+                LoadFieldsViewModel loadFieldsViewModel = new LoadFieldsViewModel();
+
+                IEnumerable<LoadField> fields;
+
+                switch (column)
+                {
+                    case LoadFieldType.Date:
+                        fields = loadData.Dates.ToList().Cast<LoadField>();
+                        break;
+                    case LoadFieldType.Number:
+                        fields = loadData.Numbers.ToList().Cast<LoadField>();
+                        break;
+                    case LoadFieldType.Description:
+                        fields = loadData.Descriptions.ToList().Cast<LoadField>();
+                        break;
+                    case LoadFieldType.Owner:
+                    default:
+                        fields = loadData.Owners.ToList().Cast<LoadField>();
+                        break;
+                }
+
+                loadFieldsViewModel.Fields = fields;
+                loadFieldsViewModel.Title = "All " + column + " Values";
+                loadFieldsViewModel.Column = column;
+
+                return View(loadFieldsViewModel);
             }
-            /**     else
-                 {
-                     List<string> items = LoadData.FindAll(column);
-                     ViewBag.title = "All " + columnChoices[column] + " Values";
-                     ViewBag.column = column;
-                     ViewBag.items = items;
-                     return View();
-                 }
-             }
+        }
 
-             public IActionResult Loads(string column, string value)
-             {
-                 List<Dictionary<string, string>> loads = LoadData.FindByColumnAndValue( column,  value);
-                 ViewBag.title = "Loads with " + columnChoices[column] + ": " + value;
-                 ViewBag.loads = loads;
+        // Lists Jobs with a given field matching a given value
+        public IActionResult Loads(LoadFieldType column, string value)
+        {
+            SearchLoadsViewModel loadsViewModel = new SearchLoadsViewModel();
+            loadsViewModel.Loads = loadData.FindByColumnAndValue(column, value);
+            loadsViewModel.Title = "Loads with " + column + ": " + value;
 
-                 return View();
-             }**/
+            return View(loadsViewModel);
         }
     }
-
+}

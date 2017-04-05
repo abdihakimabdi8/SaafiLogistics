@@ -1,45 +1,45 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SaafiLogistics.Models;
-using SaafiLogists.Controllers;
+using SaafiLogistics.Data;
+using SaafiLogistics.ViewModels;
 
 namespace SaafiLogistics.Controllers
 {
     public class SearchController : Controller
     {
 
-        List<Load> loads = LoadData.FindAll();
+        // Our reference to the data store
+        private static LoadData loadData;
+
+        static SearchController()
+        {
+            loadData = LoadData.GetInstance();
+        }
+
+        // Display the search form
         public IActionResult Index()
         {
-            ViewBag.columns = ListController.columnChoices;
-            ViewBag.title = "Search";
-            return View();
+            SearchLoadsViewModel loadsViewModel = new SearchLoadsViewModel();
+            loadsViewModel.Title = "Search";
+            return View(loadsViewModel);
         }
-    }
-}
-        
-     /**    [HttpPost]
 
-       [Route("/Search")]
-        public IActionResult Results(string searchType, string searchTerm)
+        // Process search submission and display search results
+        public IActionResult Results(SearchLoadsViewModel loadsViewModel)
         {
-            ViewBag.columns = ListController.columnChoices;
-            if (searchType.Equals("all"))
-            {
 
-                List<Load> loads = LoadData.FindByValue(searchTerm);
-                ViewBag.title = "All Loads";
-                ViewBag.loads = loads;
-                return View();
+            if (loadsViewModel.Column.Equals(LoadFieldType.All) || loadsViewModel.Value.Equals(""))
+            {
+                loadsViewModel.Loads = loadData.FindByValue(loadsViewModel.Value);
             }
             else
             {
-                List<Dictionary<string, string>> loads = LoadData.FindByColumnAndValue(searchType, searchTerm);
-                ViewBag.title = "Loads with " + ViewBag.columns[searchType] + ": " + searchTerm;
-                ViewBag.loads = loads;
-
-                return View();
+                loadsViewModel.Loads = loadData.FindByColumnAndValue(loadsViewModel.Column, loadsViewModel.Value);
             }
+
+            loadsViewModel.Title = "Search";
+
+            return View("Index", loadsViewModel);
         }
     }
-}**/
+}

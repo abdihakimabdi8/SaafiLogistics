@@ -1,107 +1,50 @@
-﻿@model List<SaafiLogistics.Models.Load>
-<h1>@{ViewBag.title = "List of Loads";}</h1>
-
-@if (Model.Count == 0)
+﻿@model SaafiLogistics.ViewModels.SearchLoadsViewModel
+<div class="page-header" style="background:white">
+    <h1 style=" font-size: 26px;color: #0b131d;
+font-weight: 600;
+font-size: 36px;
+margin-top: 20px;
+margin-bottom: 10px;
+font-family: inherit;
+font-weight: 500;
+line-height: 1.1;
+color: inherit;margin: .67em 0; font-size: 2em; box-sizing: border-box;display: block;font-size: 2em; font-weight: bold;">Your Trips
+    <a asp-controller="Load" asp-action="Add" class="hidden-xs btn btn-success pull-right">Add Trip</a> <a asp-controller="Load" asp-action="Add" class="visible-xs-block mobile-add btn-block btn btn-success">Add Trip</a>
+   <a class=" hidden-xs btn btn-default pull-right"> Print Trips</a></h1>
+</div>
+@if (Model.Loads != null)
 {
-    <p>No Loads yet!</p>
-
-}
-
-<table class="table table-striped">
-    <tr>
-        <th>Date</th>
-        <th>Number</th>
-        <th>Description</th>
-        <th>Owner</th>
-        <th>Pay</th>
-        <th>Advance</th>
-        <th>Net</th>
-    </tr>
-    @foreach (var allLoads in Model)
-    {
+   
+    <table class="table table-striped">
         <tr>
-            <td>@allLoads.Date</td>
-            <td>@allLoads.Number</td>
-            <td>@allLoads.Description</td>
-            <td>@allLoads.Owner</td>
-            <td>@allLoads.Pay</td>
-            <td>@allLoads.Advance</td>
-            <td>@allLoads.Net</td>
+            <th>Date</th>
+            <th>Number</th>
+            <th>Description</th>
+            <th>Owner</th>
+            <th>Pay</th>
+            <th>Advance</th>
+            <th>Net</th>
         </tr>
-
-
-    }
-</table>
-@*@model List<SaafiLogistics.Models.Load>
-<h1>@ViewBag.title</h1>
-<h2>@ViewBag.loads.Count Result(s)</h2>
-
-
-@if (Model.Count == 0)
-{
-    <p>No Loads yet!</p>
+    </table>
+        @foreach (var load in Model.Loads)
+        {
+            <table class="table table-striped">
+                <tr>
+                    
+                    <td>@load.Date</td>
+          
+                    <td>@load.Number</td>
+     
+                    <td>@load.Description</td>
+           
+                    <td>@load.Owner</td>
+          
+                    <td>@load.Pay</td>
+   
+                    <td>@load.Advance</td>
+  
+                    <td>@load.Net</td>
+                </tr>
+            </table>
+        }
 }
-<h2> Model.Count Result(s)</h2>
- <table class="table table-striped">
-
-         <tr>
-             <th>Date</th>
-             <th>Number</th>
-             <th>Description</th>
-             <th>Owner</th>
-             <th>Pay</th>
-             <th>Advance</th>
-             <th>Net</th>
-
-         </tr>
-         @foreach (var AllLoads in Model)
-         {
-
-
-
-                 <tr class="table table-striped">
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Date" asp-route-value="@AllLoads.Date"></a>
-                     </td>
-
-
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Number" asp-route-value="@AllLoads.Number"></a>
-                     </td>
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Description" asp-route-value="@AllLoads.Description"></a>
-                     </td>
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Owner" asp-route-value="@AllLoads.Owner"></a>
-                     </td>
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Pay" asp-route-value="@AllLoads.Pay"></a>
-                     </td>
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Advance" asp-route-value="@AllLoads.Advance"></a>
-                     </td>
-                     <td>
-                         <a asp-controller="List" asp-action="Values" asp-route-column="@AllLoads.Net" asp-route-value="@AllLoads.Net"></a>
-                     </td>
-
-
-
-
-                 <td class="align-right">
-                     <form method="post">
-                         <input name="name" type="checkbox" value="load" />
-                         <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove</button>
-                     </form>
-                 </td>
-                 </tr>
-
-             }
-
-
-         }
-     </table>
-
-
-
-<p><a asp-controller="Load" asp-action="Add">Add Load</a></p>
-*@

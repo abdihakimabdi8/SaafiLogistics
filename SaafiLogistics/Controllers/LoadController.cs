@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SaafiLogistics.Models;
-using System.Collections.Generic;
+using SaafiLogistics.Data;
 using SaafiLogistics.ViewModels;
-
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SaafiLogistics.Models;
 
 namespace SaafiLogistics.Controllers
 {
     public class LoadController : Controller
     {
         // GET: /<controller>/
-        
+        private static LoadData  loadData;
+        static LoadController()
+        {
+            loadData = LoadData.GetInstance();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -38,14 +40,14 @@ namespace SaafiLogistics.Controllers
                     Advance = addLoadViewModel.Advance,
                     Net = addLoadViewModel.Net
                 };
-                LoadData.Add(newLoad);
+                loadData.Loads.Add(newLoad);
 
                 return Redirect("/List/Loads");
             }
 
             return View(addLoadViewModel);
         }
-        [HttpGet]
+  /**      [HttpGet]
         [Route("/Load/Edit/{LoadId}")]
         public IActionResult Edit(int LoadId)
         {
@@ -76,6 +78,6 @@ namespace SaafiLogistics.Controllers
             }
 
             return Redirect("/");
-        }
+        }**/
     }
 }

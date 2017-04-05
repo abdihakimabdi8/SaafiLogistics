@@ -1,11 +1,16 @@
-﻿@model List<SaafiLogistics.Models.Load>
-<h1>@ViewBag.title</h1>
+﻿@model SaafiLogistics.ViewModels.LoadFieldsViewModel
+
 
 <table class="table table-striped">
-    @for (int i = 0; i < ViewBag.items.Count; i++)
+    @foreach (var field in Model.Fields)
     {
-        <tr class="@( i % 2 == 0 ? "even" : "odd" ) " >
-            <td><a asp-controller="List" asp-action="Loads" asp-route-column="@ViewBag.column" asp-route-value="@ViewBag.items[i]">@ViewBag.items[i]</a></td>
+        <tr class="table table-striped">
+            <td>
+                <a asp-controller="List"
+                   asp-action="Jobs"
+                   asp-route-column="@Model.Column"
+                   asp-route-value="@field.Value">@field.Value</a>
+            </td>
         </tr>
     }
 </table>
